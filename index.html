@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎂 특별한 생일 메시지</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* 비밀번호 입력 화면 */
+        #passwordScreen {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 50px 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        #passwordScreen h1 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        #passwordScreen p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        #passwordInput {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1em;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        #passwordInput:focus {
+            border-color: #764ba2;
+            box-shadow: 0 0 15px rgba(102, 126, 234, 0.3);
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        .error {
+            color: #e74c3c;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        /* 생일 축하 화면 */
+        #birthdayScreen {
+            display: none;
+            animation: slideIn 1s ease-out;
+        }
+
+        .birthday-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 60px 50px;
+            border-radius: 30px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            position: relative;
+        }
+
+        .birthday-card h1 {
+            color: #667eea;
+            font-size: 3em;
+            margin-bottom: 30px;
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        .main-message {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .minecraft-question {
+            font-size: 1.5em;
+            color: #764ba2;
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 15px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .emoji {
+            font-size: 3em;
+            margin: 20px 0;
+        }
+
+        /* 애니메이션 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.02);
+            }
+        }
+
+        /* 풍선 애니메이션 */
+        .balloon {
+            position: absolute;
+            bottom: -100px;
+            animation: float 6s ease-in infinite;
+            font-size: 3em;
+        }
+
+        @keyframes float {
+            0% {
+                bottom: -100px;
+                opacity: 1;
+            }
+            100% {
+                bottom: 100vh;
+                opacity: 0;
+            }
+        }
+
+        .balloon:nth-child(1) {
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .balloon:nth-child(2) {
+            left: 30%;
+            animation-delay: 1s;
+        }
+
+        .balloon:nth-child(3) {
+            left: 50%;
+            animation-delay: 2s;
+        }
+
+        .balloon:nth-child(4) {
+            left: 70%;
+            animation-delay: 3s;
+        }
+
+        .balloon:nth-child(5) {
+            left: 90%;
+            animation-delay: 4s;
+        }
+    </style>
+</head>
+<body>
+    <div class="balloon">🎈</div>
+    <div class="balloon">🎈</div>
+    <div class="balloon">🎈</div>
+    <div class="balloon">🎈</div>
+    <div class="balloon">🎈</div>
+
+    <div class="container">
+        <!-- 비밀번호 입력 화면 -->
+        <div id="passwordScreen">
+            <h1>🎁 특별한 메시지</h1>
+            <p>비밀번호를 입력하세요</p>
+            <input type="password" id="passwordInput" placeholder="비밀번호 입력" />
+            <button onclick="checkPassword()">확인</button>
+            <div id="errorMsg" class="error"></div>
+            <p style="margin-top: 20px; font-size: 0.85em; color: #999;">힌트: 내 생일</p>
+        </div>
+
+        <!-- 생일 축하 화면 -->
+        <div id="birthdayScreen">
+            <div class="birthday-card">
+                <div class="emoji">🎂🎉🎈</div>
+                <h1>🎊 생일 축하해! 🎊</h1>
+                <div class="main-message">
+                    <strong>보영아!</strong><br>
+                    태어나 줘서 고마워 😊
+                </div>
+                <div class="minecraft-question">
+                    🎮 나랑 같이 마인크래프트 할래? ⛏️
+                </div>
+                <div class="emoji">🍰✨🎁</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isUnlocked = false;
+
+        function checkPassword() {
+            const input = document.getElementById('passwordInput');
+            const errorMsg = document.getElementById('errorMsg');
+            const password = input.value;
+
+            if (password === '0407' || password === '1234') {
+                isUnlocked = true;
+                document.getElementById('passwordScreen').style.display = 'none';
+                document.getElementById('birthdayScreen').style.display = 'block';
+                errorMsg.textContent = '';
+                
+                // 축하 효과
+                createConfetti();
+            } else {
+                errorMsg.textContent = '비밀번호가 틀렸어요! 다시 시도해보세요.';
+                input.value = '';
+                input.focus();
+            }
+        }
+
+        // Enter 키로도 제출 가능
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        // 간단한 축하 효과
+        function createConfetti() {
+            const colors = ['#667eea', '#764ba2', '#ffd700', '#ff69b4', '#00ff00'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.style.position = 'fixed';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = '-10px';
+                    confetti.style.width = '10px';
+                    confetti.style.height = '10px';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.borderRadius = '50%';
+                    confetti.style.animation = 'float 4s ease-in forwards';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 4000);
+                }, i * 50);
+            }
+        }
+    </script>
+</body>
+</html>
